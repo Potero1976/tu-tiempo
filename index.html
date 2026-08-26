@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TU TIEMPO - Previsión del Tiempo</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/traffic-light.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+    <div id="bg-overlay" class="bg-overlay"></div>
+
+    <div id="app" class="app">
+        <header class="header">
+            <div class="header-left">
+                <span class="header-logo">🌤️</span>
+                <h1>TU TIEMPO</h1>
+            </div>
+            <div class="header-right">
+                <button id="btn-favorites" class="btn-icon" title="Favoritos">⭐</button>
+            </div>
+        </header>
+
+        <div class="search-section">
+            <div class="search-box">
+                <input type="text" id="search-input" placeholder="Busca una ciudad..." autocomplete="off" />
+                <button id="btn-search" class="btn-search">🔍</button>
+            </div>
+            <div id="search-results" class="search-results hidden"></div>
+        </div>
+
+        <div class="map-container">
+            <div id="map"></div>
+            <div class="map-coords-bar">
+                <span id="map-coords-text">Haz clic en el mapa</span>
+            </div>
+        </div>
+
+        <div class="poi-section">
+            <div class="poi-search-box">
+                <input type="text" id="poi-search-input" placeholder="Buscar lugares: campo de golf, restaurante..." autocomplete="off" />
+                <button id="poi-search-btn" class="btn-search">🔍</button>
+                <button id="poi-clear-btn" class="btn-poi-clear" title="Limpiar POIs">✕</button>
+            </div>
+            <div class="poi-quick-tags">
+                <button class="poi-tag" data-poi="campo de golf">⛳ Golf</button>
+                <button class="poi-tag" data-poi="playa">🏖️ Playa</button>
+                <button class="poi-tag" data-poi="restaurante">🍽️ Restaurante</button>
+                <button class="poi-tag" data-poi="hotel">🏨 Hotel</button>
+                <button class="poi-tag" data-poi="aparcamiento">🅿️ Parking</button>
+                <button class="poi-tag" data-poi="supermercado">🛒 Super</button>
+            </div>
+            <div id="poi-results" class="poi-results hidden"></div>
+        </div>
+
+        <div class="mode-section">
+            <div class="mode-buttons">
+                <button class="mode-btn active" data-mode="general">🌤️ General</button>
+                <button class="mode-btn" data-mode="golf">⛳ Golf</button>
+                <button class="mode-btn" data-mode="beach">🏖️ Playa</button>
+                <button class="mode-btn" data-mode="mountain">🏔️ Montaña</button>
+            </div>
+        </div>
+
+        <div class="action-buttons">
+            <button id="btn-clear" class="btn-action">✕ Limpiar</button>
+            <button id="btn-save-favorite" class="btn-fav">☆ Guardar zona</button>
+        </div>
+
+        <div id="global-light" class="global-light">
+            <div id="global-label" class="global-light-label">Selecciona una ubicación</div>
+            <div class="traffic-light-large" id="global-traffic-light">
+                <div class="tl-light red"></div>
+                <div class="tl-light orange"></div>
+                <div class="tl-light green active"></div>
+            </div>
+            <div class="global-light-status" id="global-status">
+                <span class="status-badge badge-green">—</span>
+            </div>
+        </div>
+
+        <div id="weather-content" class="weather-cards">
+            <div class="empty-state">
+                <div class="empty-icon">🗺️</div>
+                <p>Haz clic en el mapa o busca una ciudad</p>
+            </div>
+        </div>
+
+        <div id="special-cards" class="special-cards-section" style="padding: 0 20px 20px;"></div>
+
+        <div id="loading-overlay" class="loading-overlay hidden">
+            <div class="loading-spinner-large"></div>
+        </div>
+
+        <div id="favorites-panel" class="favorites-panel hidden">
+            <div class="favorites-header">
+                <h3>⭐ Mis Zonas Guardadas</h3>
+                <button id="btn-close-favorites" class="btn-close">✕</button>
+            </div>
+            <div id="favorites-list" class="favorites-list">
+                <p class="no-favorites">No hay zonas guardadas aún</p>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>Datos: <a href="https://open-meteo.com/" target="_blank">Open-Meteo</a> |
+               <a href="https://www.wetterzentrale.de/en/" target="_blank">Wetterzentrale</a> |
+               Mapas: <a href="https://maps.google.com/" target="_blank">Google Maps</a></p>
+        </footer>
+    </div>
+
+    <script src="js/trafficLight.js"></script>
+    <script src="js/weather.js"></script>
+    <script src="js/map.js"></script>
+    <script src="js/favorites.js"></script>
+    <script src="js/audit.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const result = await Audit.run();
+            if (result.failed > 0) {
+                console.warn(`⚠️ ${result.failed} fallos detectados. Revisa la consola.`);
+            }
+        });
+    </script>
+</body>
+</html>

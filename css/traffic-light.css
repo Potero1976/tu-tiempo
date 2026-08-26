@@ -1,0 +1,175 @@
+/* ============================================
+   TU TIEMPO - Sistema de Semáforo
+   ============================================ */
+
+/* Semáforo inline (pequeño, en cada card) */
+.traffic-light {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: center;
+}
+
+.traffic-light .tl-light {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 2px solid rgba(0, 0, 0, 0.3);
+    transition: all 0.5s ease;
+    opacity: 0.2;
+}
+
+.traffic-light .tl-light.active {
+    opacity: 1;
+    box-shadow: 0 0 10px currentColor;
+}
+
+.traffic-light .tl-light.red {
+    background: #ef4444;
+    color: #ef4444;
+}
+
+.traffic-light .tl-light.orange {
+    background: #f59e0b;
+    color: #f59e0b;
+}
+
+.traffic-light .tl-light.green {
+    background: #22c55e;
+    color: #22c55e;
+}
+
+/* Semáforo activo por estado */
+.traffic-light.state-red .tl-light.red.active {
+    opacity: 1;
+    box-shadow: 0 0 12px #ef4444;
+}
+
+.traffic-light.state-orange .tl-light.orange.active {
+    opacity: 1;
+    box-shadow: 0 0 12px #f59e0b;
+}
+
+.traffic-light.state-green .tl-light.green.active {
+    opacity: 1;
+    box-shadow: 0 0 12px #22c55e;
+}
+
+/* ============================================
+   Semáforo GLOBAL (grande)
+   ============================================ */
+.traffic-light-large {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    padding: 16px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 16px;
+    width: 80px;
+    margin: 0 auto;
+}
+
+.traffic-light-large .tl-light {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 3px solid rgba(0, 0, 0, 0.4);
+    transition: all 0.6s ease;
+    opacity: 0.15;
+}
+
+.traffic-light-large .tl-light.red {
+    background: #ef4444;
+}
+
+.traffic-light-large .tl-light.orange {
+    background: #f59e0b;
+}
+
+.traffic-light-large .tl-light.green {
+    background: #22c55e;
+}
+
+/* Estados del semáforo global */
+.traffic-light-large.state-green .tl-light.green {
+    opacity: 1;
+    box-shadow: 0 0 20px #22c55e, 0 0 40px rgba(34, 197, 94, 0.3);
+}
+
+.traffic-light-large.state-orange .tl-light.orange {
+    opacity: 1;
+    box-shadow: 0 0 20px #f59e0b, 0 0 40px rgba(245, 158, 11, 0.3);
+}
+
+.traffic-light-large.state-red .tl-light.red {
+    opacity: 1;
+    box-shadow: 0 0 20px #ef4444, 0 0 40px rgba(239, 68, 68, 0.3);
+    animation: pulseRed 2s ease-in-out infinite;
+}
+
+/* Card con borde dinámico según semáforo */
+.weather-card.border-red {
+    border-color: rgba(239, 68, 68, 0.5);
+    animation: pulseCardRed 3s ease-in-out infinite;
+}
+
+.weather-card.border-orange {
+    border-color: rgba(245, 158, 11, 0.4);
+}
+
+.weather-card.border-green {
+    border-color: rgba(34, 197, 94, 0.3);
+}
+
+/* ============================================
+   Badge de estado
+   ============================================ */
+.status-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.status-badge.badge-green {
+    background: rgba(34, 197, 94, 0.15);
+    color: #22c55e;
+    border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.status-badge.badge-orange {
+    background: rgba(245, 158, 11, 0.15);
+    color: #f59e0b;
+    border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.status-badge.badge-red {
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+/* ============================================
+   ANIMACIONES
+   ============================================ */
+@keyframes pulseRed {
+    0%, 100% {
+        box-shadow: 0 0 20px #ef4444, 0 0 40px rgba(239, 68, 68, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 30px #ef4444, 0 0 60px rgba(239, 68, 68, 0.5);
+    }
+}
+
+@keyframes pulseCardRed {
+    0%, 100% {
+        border-color: rgba(239, 68, 68, 0.3);
+    }
+    50% {
+        border-color: rgba(239, 68, 68, 0.7);
+    }
+}
